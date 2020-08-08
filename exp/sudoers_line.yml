@@ -1,0 +1,12 @@
+- name: Ping Servers
+  hosts: k8s_ip
+  become: yes
+
+  tasks:
+
+  - name: Ensuring that wheel is able to use sudo without password
+    lineinfile:
+      path: /etc/sudoers
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'

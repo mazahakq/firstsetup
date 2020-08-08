@@ -1,0 +1,8 @@
+- name: Reboot servers
+  hosts: centos
+  become: yes
+
+  tasks:
+
+  - name: Reboot Servers
+    reboot:        

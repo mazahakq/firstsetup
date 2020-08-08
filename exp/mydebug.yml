@@ -1,0 +1,30 @@
+- name: Create user
+  hosts: centos
+  become: yes
+
+  vars:
+    myvar: test
+
+  tasks:
+
+  - name: Deb
+    debug:
+      var: myvar
+    
+  - debug:
+      msg: "Hi {{myvar}}"
+
+  - set_fact:
+      message: "HI YES{{myvar}}"
+
+  - debug:
+      var: message
+  
+  - debug:
+      msg: "{{ansible_distribution}}"
+
+  - shell: id ansible
+    register: clrid
+
+  - debug:
+      msg: "ID ansible: {{clrid}}"      

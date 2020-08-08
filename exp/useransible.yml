@@ -1,0 +1,21 @@
+- name: MyScenary
+  hosts: centos
+  become: yes
+
+  tasks:
+  - name: delete user ansible
+    user:
+      name: ansible
+      state: absent
+      remove: yes
+
+  - name: Create a 2048-bit SSH key for user ansible
+    user:
+      name: ansible
+      comment: user ansible
+      groups: wheel
+      password: $6$fgfdghfh665$gz39a8GXO4PnCgQTG4hqiR5ougrIT1.LEFg6SC9hwVg4v2TAtoyu3Lo8vGEAPhNGjZj5H9z9.REQR9/Dk4eUe/
+      #generate_ssh_key: yes
+      #ssh_key_bits: 2048
+      #ssh_key_file: .ssh/id_ansible
+      append: yes

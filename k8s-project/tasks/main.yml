@@ -1,0 +1,8 @@
+---
+# tasks file for k8s-project
+
+  - name: Copy
+    template:
+      src: filetest.j2
+      dest: /tmp/
+      mode: 0600

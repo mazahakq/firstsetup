@@ -1,0 +1,4 @@
+- hosts: n4200-gitlab
+  become: yes
+  roles:
+    - { role: geerlingguy.gitlab }

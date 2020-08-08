@@ -1,0 +1,48 @@
+---
+# tasks file for first_setup
+  - name: Task ping
+    ping:
+
+  - name: Sudoers add wheel
+    lineinfile:
+      path: /etc/sudoers
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+
+  - name: Create user
+    user:
+      name: "{{useradd}}"
+      comment: "{{usercomm}}"
+      groups: "{{groupsadd}}"
+      password: "{{passadd}}"
+      append: yes
+
+  - name: Update cache
+    yum:
+      update_cache: yes
+
+  - name: Install packages
+    yum:
+      pkg: "{{packages}}"
+      state: present
+
+  - name: copy file
+    copy:
+      src: "{{file_src}}"
+      dest: "{{file_dest}}"
+      mode: 0755
+
+  - name: service add enable start
+    systemd:
+      service: "{{item}}"
+      enabled: yes
+      state: started
+    loop: "{{services_add}}"
+
+  - name: service del disable stop
+    systemd:
+      service: "{{item}}"
+      enabled: no
+      state: stopped
+    loop: "{{services_del}}"

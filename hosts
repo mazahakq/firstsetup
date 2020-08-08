@@ -1,0 +1,13 @@
+[centos]
+n4200-centos[1:5]
+n4200-k8s
+n4200-gitlab
+
+[k8s]
+n4200-k8s
+
+#[all_groups:children]
+#centos
+## db-[99:101]-node.example.com
+#n4200-centos3 ansible_host=192.168.1.11 ansible_user=root ansible_password=!
+#n4200-centos5 ansible_host=192.168.1.14 ansible_user=mazahakq ansible_ssh_private_key_file=/root/.ssh/id_rsa_all_centos

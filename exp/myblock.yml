@@ -1,0 +1,31 @@
+- name: Test Block
+  hosts: centos
+  become: yes
+
+  vars:
+    
+
+  tasks:
+
+  - block:
+
+    - name: ID
+      shell: id ansible
+      register: clrid
+
+    - name: LS
+      shell: ls -al
+      register: clrls
+
+    - debug:
+        msg: "RES: {{clrid}} {{clrls}}"
+    when: ansible_hostname == "n4200-centos1"
+
+  - name: Test
+    shell: ps -aux
+    register: clrps
+
+  - debug:
+      msg: "PS: {{clrps}}"
+
+    when: ansible_hostname == "n4200-centos2"

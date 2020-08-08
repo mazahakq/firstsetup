@@ -1,0 +1,72 @@
+- name: MyScenary
+  hosts: centos
+  become: yes
+
+  vars:
+    useradd: ansible
+    usercomm: user ansible
+    groupsadd: wheel
+    passadd: $6$fgfdghfh665$gz39a8GXO4PnCgQTG4hqiR5ougrIT1.LEFg6SC9hwVg4v2TAtoyu3Lo8vGEAPhNGjZj5H9z9.REQR9/Dk4eUe/ 
+    packages: 
+             - samba
+             - nano
+             - epel-release 
+
+    services_add:
+                 - smb
+                 - nmb
+
+    services_del:
+                 - firewalld  
+    
+    file_src: ./testfile
+    file_dest: /tmp
+
+  tasks:
+  
+  - name: Task ping
+    ping:   
+
+  - name: Sudoers add wheel
+    lineinfile:
+      path: /etc/sudoers
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+
+  - name: Create user
+    user:
+      name: "{{useradd}}"
+      comment: "{{usercomm}}"
+      groups: "{{groupsadd}}"
+      password: "{{passadd}}"
+      append: yes
+
+  - name: Update cache
+    yum:
+      update_cache: yes
+  
+  - name: Install packages
+    yum:
+      pkg: "{{packages}}"
+      state: present
+
+  - name: copy file
+    copy:
+      src: "{{file_src}}"
+      dest: "{{file_dest}}"
+      mode: 0755
+
+  - name: service add enable start
+    systemd:
+      service: "{{item}}"
+      enabled: yes
+      state: started
+    loop: "{{services_add}}"
+
+  - name: service del disable stop
+    systemd:
+      service: "{{item}}"
+      enabled: no
+      state: stopped
+    loop: "{{services_del}}"

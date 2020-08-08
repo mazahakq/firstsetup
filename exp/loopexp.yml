@@ -1,0 +1,13 @@
+- name: Loops
+  hosts: centos
+  become: yes
+
+  tasks:
+  
+  - name: Create Folder
+    file:
+      path: "/tmp/{{item}}"
+      state: directory
+    loop:
+       - dir1
+       - dir2

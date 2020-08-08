@@ -1,0 +1,14 @@
+- name: Template
+  hosts: centos
+  become: yes
+
+  vars:
+    position: test
+
+  tasks:
+
+  - name: Copy
+    template:
+      src: ./filetest.j2
+      dest: /tmp/
+      mode: 0600

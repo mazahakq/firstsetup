@@ -1,0 +1,9 @@
+- name: Install First and k8s
+  hosts: centos
+  become: yes
+  gather_facts: yes
+  roles:
+          - first_setup
+          - k8s-project
+
+
