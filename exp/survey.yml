@@ -1,0 +1,16 @@
+---
+  name: Check survey
+  hosts: all
+  become: yes
+
+  vars:
+    packages: 
+             - telnet
+             - vim
+
+  tasks:
+
+  - name: Yum Inst
+    yum:
+      pkg: "{{packages}}"
+      state: present
