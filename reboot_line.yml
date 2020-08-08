@@ -1,5 +1,5 @@
 - name: Reboot servers
-  hosts: centos
+  hosts: all
   become: yes
 
   tasks:
